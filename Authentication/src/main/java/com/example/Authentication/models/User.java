@@ -1,6 +1,7 @@
 package com.example.Authentication.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.UUID;
@@ -10,15 +11,17 @@ import java.util.UUID;
 public class User {
   private String email;
   private String password;//todo hash it with jwt and bcrypt
+
   @Id
+  @GeneratedValue
   private UUID id;
 
   public User(){
 
   }
 
-  public User(String userName, String password, UUID id) {
-    this.email = userName;
+  public User(String email, String password, UUID id) {
+    this.email = email;
     this.password = password;
     this.id = id;
   }
@@ -27,4 +30,11 @@ public class User {
     return email;
   }
 
+  public String getPassword() {
+    return password;
+  }
+
+  public UUID getId() {
+    return id;
+  }
 }

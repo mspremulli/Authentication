@@ -11,23 +11,33 @@ import java.util.UUID;
 @RestController
 public class userController {
 
-//  @Autowired
-//  private User user;
-
   @Autowired
   private userService service;
 
   @PostMapping
-  public User createUser(@RequestParam String email, @RequestParam String password){
-    User user = new User(email, password, new UUID(1,1));
+  public User createUser(@RequestBody User user){
     service.createUser(user);
     return user;
   }
 
   @GetMapping
   public List<User> getAllUsers(){
-
     return service.findAll();
+  }
+
+  @GetMapping("{id}")
+  User getUserById(@PathVariable UUID id){
+    return service.findById(id);
+  }
+
+  @DeleteMapping("{id}")
+  void deleteUserById(@PathVariable UUID id){
+    service.deleteById(id);
+  }
+
+  @DeleteMapping
+  void deleteAll(){
+    service.deleteAll();
   }
 
 }
