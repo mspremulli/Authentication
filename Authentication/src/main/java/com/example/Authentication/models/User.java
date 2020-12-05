@@ -1,15 +1,26 @@
 package com.example.Authentication.models;
 
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import java.util.UUID;
 
-@Document(collection = "users")
+@Entity
+@Table(name = "users")
 public class User {
   private String email;
   private String password;//todo hash it with jwt and bcrypt
+  @Id
+  private UUID id;
 
-  public User(String userName, String password) {
+  public User(){
+
+  }
+
+  public User(String userName, String password, UUID id) {
     this.email = userName;
     this.password = password;
+    this.id = id;
   }
 
   public String getEmail() {

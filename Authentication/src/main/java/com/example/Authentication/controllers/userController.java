@@ -5,22 +5,29 @@ import com.example.Authentication.services.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class userController {
 
+//  @Autowired
+//  private User user;
+
   @Autowired
-  userService service;
+  private userService service;
 
   @PostMapping
   public User createUser(@RequestParam String email, @RequestParam String password){
-    return new User(email, password);
+    User user = new User(email, password, new UUID(1,1));
+    service.createUser(user);
+    return user;
   }
 
   @GetMapping
   public List<User> getAllUsers(){
+
     return service.findAll();
   }
+
 }

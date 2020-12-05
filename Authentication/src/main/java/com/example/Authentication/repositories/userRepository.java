@@ -1,9 +1,9 @@
 package com.example.Authentication.repositories;
 
 import com.example.Authentication.models.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public interface userRepository extends MongoRepository<User, Object> {
+import java.util.UUID;
+
+public interface userRepository extends JpaRepository<User, UUID> {
 }
