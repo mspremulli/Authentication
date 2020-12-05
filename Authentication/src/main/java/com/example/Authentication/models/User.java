@@ -1,24 +1,18 @@
 package com.example.Authentication.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users")
+@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
 public class User {
-  private String email;
+
+  private final String email;
   private String password;//todo hash it with jwt and bcrypt
 
   @Id
   @GeneratedValue
-  private UUID id;
-
-  public User(){
-
-  }
+  private final UUID id;
 
   public User(String email, String password, UUID id) {
     this.email = email;
@@ -32,6 +26,10 @@ public class User {
 
   public String getPassword() {
     return password;
+  }
+
+  public void resetPassword(String newPassword){
+    password = newPassword;
   }
 
   public UUID getId() {

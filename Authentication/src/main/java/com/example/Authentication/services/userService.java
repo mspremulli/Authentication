@@ -12,7 +12,7 @@ import java.util.UUID;
 public class userService {
 
   @Autowired
-  userRepository repository;
+  private userRepository repository;
 
   public List<User> findAll(){
     return repository.findAll();

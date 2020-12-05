@@ -26,17 +26,17 @@ public class userController {
   }
 
   @GetMapping("{id}")
-  User getUserById(@PathVariable UUID id){
+  public User getUserById(@PathVariable UUID id){
     return service.findById(id);
   }
 
   @DeleteMapping("{id}")
-  void deleteUserById(@PathVariable UUID id){
+  public void deleteUserById(@PathVariable UUID id){
     service.deleteById(id);
   }
 
   @DeleteMapping
-  void deleteAll(){
+  public void deleteAll(){
     service.deleteAll();
   }
 
