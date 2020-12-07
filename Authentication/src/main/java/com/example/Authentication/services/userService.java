@@ -35,6 +35,4 @@ public class userService {
     repository.deleteAll();
   }
 
-
-
 }

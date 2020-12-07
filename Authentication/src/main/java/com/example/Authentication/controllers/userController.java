@@ -5,7 +5,6 @@ import com.example.Authentication.services.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -21,22 +20,16 @@ public class userController {
   }
 
   @GetMapping
-  public List<User> getAllUsers(){
+  public Object getUsers(@RequestHeader(required = false) UUID id){
+    System.out.println("header from Auth: " + id);
+    if(id != null) return service.findById(id);
+
     return service.findAll();
   }
 
-  @GetMapping("{id}")
-  public User getUserById(@PathVariable UUID id){
-    return service.findById(id);
-  }
-
-  @DeleteMapping("{id}")
-  public void deleteUserById(@PathVariable UUID id){
-    service.deleteById(id);
-  }
-
   @DeleteMapping
-  public void deleteAll(){
+  public void deleteUserById(@RequestHeader(value = "id", required = false) UUID id){
+    if(id != null) service.deleteById(id);
     service.deleteAll();
   }
 

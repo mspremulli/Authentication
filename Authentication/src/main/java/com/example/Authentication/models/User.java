@@ -4,20 +4,30 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = {"email"}))
+@Table(name = "users", uniqueConstraints = {
+        @UniqueConstraint(columnNames = "email", name = "uniqueNameConstraint")
+})
+
 public class User {
 
-  private final String email;
+  @Column(name = "email", unique = true)//todo not working
+  private  String email;
+
+  @Column(name = "password")
   private String password;//todo hash it with jwt and bcrypt
 
   @Id
   @GeneratedValue
-  private final UUID id;
+  private UUID id;
+
 
   public User(String email, String password, UUID id) {
     this.email = email;
     this.password = password;
     this.id = id;
+  }
+
+  public User() {
   }
 
   public String getEmail() {
