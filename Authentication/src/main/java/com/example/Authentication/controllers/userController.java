@@ -21,16 +21,14 @@ public class userController {
 
   @GetMapping
   public Object getUsers(@RequestHeader(required = false) UUID id){
-    System.out.println("header from Auth: " + id);
     if(id != null) return service.findById(id);
-
     return service.findAll();
   }
 
   @DeleteMapping
-  public void deleteUserById(@RequestHeader(value = "id", required = false) UUID id){
+  public void deleteUserById(@RequestHeader(required = false) UUID id){
     if(id != null) service.deleteById(id);
-    service.deleteAll();
+//    else service.deleteAll();
   }
 
 }
