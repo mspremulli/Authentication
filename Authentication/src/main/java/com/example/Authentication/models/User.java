@@ -7,6 +7,7 @@ import java.util.UUID;
 @Table(name = "users", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email", name = "uniqueNameConstraint")
 })
+//todo: throw error for duplicate emails
 
 public class User {
 
@@ -20,11 +21,9 @@ public class User {
   @GeneratedValue
   private UUID id;
 
-
-  public User(String email, String password, UUID id) {
+  public User(String email, String password) {
     this.email = email;
     this.password = password;
-    this.id = id;
   }
 
   public User() {
@@ -42,7 +41,13 @@ public class User {
     password = newPassword;
   }
 
+  public void hashPassword(String newPassword){
+    password = newPassword;
+  }
+
   public UUID getId() {
     return id;
   }
+
+
 }
