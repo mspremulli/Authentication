@@ -33,8 +33,38 @@ public class userController {
   }
 
   @PutMapping
-  public User signIn(@RequestBody User user){
-    return null;
+  public String signIn(@RequestBody User user){
+    try{
+      User checkUser = service.findById(user.getId());
+      String hashedPassword = checkUser.getPassword();
+
+      if(BCrypt.checkpw(user.getPassword(), hashedPassword)){
+        Instant currentTime = Instant.now();
+        Date signedAt = Date.from(currentTime);
+        Date expiresAt = Date.from(currentTime.plus(8, ChronoUnit.HOURS));
+
+        SecretKey key = Keys.hmacShaKeyFor(env.getProperty("JWTKey").getBytes(StandardCharsets.UTF_8));
+
+        String jwt = Jwts.builder()
+                .setSubject("user-auth")
+                .setIssuedAt(signedAt)
+                .setExpiration(expiresAt)
+                .claim("id", checkUser.getId())
+                .signWith(key)
+                .compact();
+
+        return jwt;
+      }
+      else{
+        return "login failed: username and password do not match";
+      }
+
+    }
+    catch (Exception e) {
+      e.printStackTrace();
+      return e.getMessage();
+    }
+
   }
 
   @GetMapping
