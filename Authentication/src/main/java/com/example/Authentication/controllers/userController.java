@@ -29,13 +29,16 @@ public class userController {
   public User createUser(@RequestBody User user){
     user.hashPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10)));
     service.createUser(user);
+    System.out.println(user);
     return user;
   }
 
   @PutMapping
   public String signIn(@RequestBody User user){
     try{
-      User checkUser = service.findById(user.getId());
+      User checkUser = service.findUserByEmail(user.getEmail());
+      if(checkUser == null) return "user not found";
+
       String hashedPassword = checkUser.getPassword();
 
       if(BCrypt.checkpw(user.getPassword(), hashedPassword)){
