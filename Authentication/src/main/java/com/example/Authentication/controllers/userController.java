@@ -27,10 +27,13 @@ public class userController {
 
   @PostMapping
   public User createUser(@RequestBody User user){
-    user.hashPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10)));
+    hashPassword(user);
     service.createUser(user);
-    System.out.println(user);
     return user;
+  }
+
+  private void hashPassword(User user){
+    user.hashPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10)));
   }
 
   @PutMapping
